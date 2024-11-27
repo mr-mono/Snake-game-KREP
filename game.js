@@ -2,11 +2,12 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 
-// Set grid size (normal size without scaling)
-const gridSize = 20; // Base grid size (each square of the grid is 20px)
+// Set smaller grid size and scale factor for the images (smaller grid)
+const gridSize = 15;  // Smaller grid size (15px per cell)
+const scaledSize = gridSize * 2;  // 100% bigger size (30px if gridSize is 15)
 
-// Increased canvas size (size remains the same)
-const canvasSize = 640;  // Increased canvas size (640px x 640px)
+// Adjust canvas size
+const canvasSize = 480;  // Smaller canvas size (480px x 480px)
 canvas.width = canvasSize;
 canvas.height = canvasSize;
 
@@ -14,32 +15,32 @@ let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
-let snake = [{ x: 260, y: 260 }];  // Snake starts in the center
-let direction = { x: gridSize, y: 0 };  // Initial movement direction
+let snake = [{ x: 240, y: 240 }];
+let direction = { x: scaledSize, y: 0 };
 
 // Food position
-let food = { x: 300, y: 300 };  // Initial food position
+let food = { x: 300, y: 300 };
 
 // Load the snake and food images
 const snakeImage = new Image();
-snakeImage.src = "snake.png";  // Ensure snake.png is the correct size
+snakeImage.src = "snake.png";  // Ensure snake.png is big enough for scaling
 const foodImage = new Image();
-foodImage.src = "food.png";    // Ensure food.png is the correct size
+foodImage.src = "food.png";    // Ensure food.png is big enough for scaling
 
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-  // Draw the snake (without resizing the image)
+  // Draw the snake (with the new scaled size)
   for (let i = 0; i < snake.length; i++) {
-    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize, gridSize);
+    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, scaledSize, scaledSize);
   }
 
-  // Draw the food (without resizing the image)
-  ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
+  // Draw the food (with the new scaled size)
+  ctx.drawImage(foodImage, food.x, food.y, scaledSize, scaledSize);
 
   // Update the score display
-  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("score").textContent = score;
 }
 
 function moveSnake() {
@@ -93,20 +94,20 @@ function endGame() {
 // Event listener for key presses (arrow keys)
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;  // Don't accept new key presses after the game is over
-  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -gridSize };
-  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: gridSize };
-  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
-  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
+  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -scaledSize };
+  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: scaledSize };
+  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -scaledSize, y: 0 };
+  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: scaledSize, y: 0 };
 });
 
 // Reset the game
 function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
-  snake = [{ x: 260, y: 260 }];  // Reset snake position
-  direction = { x: gridSize, y: 0 };  // Reset initial movement direction
-  score = 0;  // Reset score
-  generateFood();  // Generate new food
+  snake = [{ x: 240, y: 240 }];
+  direction = { x: scaledSize, y: 0 };
+  score = 0;
+  generateFood();
   gameLoop();  // Restart the game loop
 }
 
@@ -115,7 +116,7 @@ let gameLoopID;
 function gameLoop() {
   moveSnake();
   draw();
-  gameLoopID = setTimeout(gameLoop, 150);  // Increase the interval to slow down snake movement (150ms)
+  gameLoopID = setTimeout(gameLoop, 250);  // Slower movement (250ms interval)
 }
 
 // Start the game
