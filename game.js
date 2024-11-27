@@ -3,8 +3,8 @@ const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 
 // Set grid size and scale factor for the images (100% bigger)
-const gridSize = 20; // Base grid size
-const scaledSize = gridSize * 2;  // 100% bigger size (40px if gridSize is 20)
+const gridSize = 20; // Base grid size (each square of the grid is 20px)
+const scaledSize = gridSize * 1.6;  // 60% bigger size (32px if gridSize is 20)
 
 // Increased canvas size
 const canvasSize = 640;  // Increased canvas size (640px x 640px)
@@ -15,11 +15,11 @@ let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
-let snake = [{ x: 260, y: 260 }];
-let direction = { x: scaledSize, y: 0 };
+let snake = [{ x: 260, y: 260 }];  // Snake starts in the center
+let direction = { x: scaledSize, y: 0 };  // Initial movement direction
 
 // Food position
-let food = { x: 300, y: 300 };
+let food = { x: 300, y: 300 };  // Initial food position
 
 // Load the snake and food images
 const snakeImage = new Image();
@@ -31,22 +31,21 @@ foodImage.src = "food.png";    // Ensure food.png is big enough for scaling
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-  // Draw the snake (with the new 100% larger size)
+  // Draw the snake (with the new 60% larger size)
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImage, snake[i].x, snake[i].y, scaledSize, scaledSize);
   }
 
-  // Draw the food (with the new 100% larger size)
+  // Draw the food (with the new 60% larger size)
   ctx.drawImage(foodImage, food.x, food.y, scaledSize, scaledSize);
 
   // Update the score display
-  document.getElementById("score").textContent = score;
+  document.getElementById("score").textContent = `Score: ${score}`;
 }
 
 function moveSnake() {
   if (gameOver) return;  // If the game is over, don't move the snake
 
-  // Calculate the new head position
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Check for collision with walls
@@ -68,10 +67,8 @@ function moveSnake() {
   if (head.x === food.x && head.y === food.y) {
     score += 10;
     generateFood();  // Generate new food after eating
-    // Do NOT remove the last segment here, so the snake grows
   } else {
-    // Remove the last segment of the snake to maintain the length
-    snake.pop();
+    snake.pop();  // Remove the last segment if no food was eaten
   }
 }
 
@@ -107,10 +104,10 @@ document.addEventListener("keydown", (e) => {
 function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
-  snake = [{ x: 260, y: 260 }];
-  direction = { x: scaledSize, y: 0 };
-  score = 0;
-  generateFood();
+  snake = [{ x: 260, y: 260 }];  // Reset snake position
+  direction = { x: scaledSize, y: 0 };  // Reset initial movement direction
+  score = 0;  // Reset score
+  generateFood();  // Generate new food
   gameLoop();  // Restart the game loop
 }
 
