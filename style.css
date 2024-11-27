@@ -15,10 +15,22 @@ body {
     margin-bottom: 20px; /* Space between title and score */
 }
 
+/* Rainbow animation for the title */
+@keyframes rainbowText {
+    0% { color: red; }
+    14% { color: orange; }
+    28% { color: yellow; }
+    42% { color: green; }
+    57% { color: blue; }
+    71% { color: indigo; }
+    85% { color: violet; }
+    100% { color: red; }
+}
+
 #title-container h1 {
     font-size: 36px;
-    color: #333;
     margin: 0;
+    animation: rainbowText 3s infinite; /* Apply the rainbow animation */
 }
 
 #score-container {
@@ -38,9 +50,6 @@ body {
 canvas {
     border: 2px solid black;
     display: block;
-    /* Optional: set max width and height for responsiveness */
-    max-width: 100%;
-    max-height: 100%;
 }
 
 #game-over-container {
@@ -51,15 +60,6 @@ canvas {
     text-align: center;
     color: red;
     font-size: 20px;
-    background-color: rgba(0, 0, 0, 0.7);  /* Optional: Dark background for readability */
-    padding: 20px;
-    border-radius: 10px;
-    display: none;  /* Hidden by default, shown when game is over */
-}
-
-#game-over-message {
-    font-size: 24px;
-    color: #fff;  /* White text for better contrast */
 }
 
 #reset-button {
@@ -75,29 +75,4 @@ canvas {
 
 #reset-button:hover {
     background-color: #45a049;
-}
-
-/* Optional: Adjust layout for small screens */
-@media screen and (max-width: 600px) {
-    canvas {
-        width: 100%;
-        height: auto;
-    }
-
-    #title-container h1 {
-        font-size: 28px;
-    }
-
-    #score-container {
-        font-size: 16px;
-    }
-
-    #game-over-container {
-        font-size: 16px;
-    }
-
-    #reset-button {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
 }
