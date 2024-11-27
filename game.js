@@ -46,6 +46,7 @@ function draw() {
 function moveSnake() {
   if (gameOver) return;  // If the game is over, don't move the snake
 
+  // Calculate the new head position
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Check for collision with walls
@@ -67,8 +68,10 @@ function moveSnake() {
   if (head.x === food.x && head.y === food.y) {
     score += 10;
     generateFood();  // Generate new food after eating
+    // Do NOT remove the last segment here, so the snake grows
   } else {
-    snake.pop();  // Remove the last segment if no food was eaten
+    // Remove the last segment of the snake to maintain the length
+    snake.pop();
   }
 }
 
