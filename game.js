@@ -2,11 +2,10 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 
-// Set grid size and scale factor for the images (100% bigger)
+// Set grid size (normal size without scaling)
 const gridSize = 20; // Base grid size (each square of the grid is 20px)
-const scaledSize = gridSize * 1.6;  // 60% bigger size (32px if gridSize is 20)
 
-// Increased canvas size
+// Increased canvas size (size remains the same)
 const canvasSize = 640;  // Increased canvas size (640px x 640px)
 canvas.width = canvasSize;
 canvas.height = canvasSize;
@@ -16,28 +15,28 @@ let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
 let snake = [{ x: 260, y: 260 }];  // Snake starts in the center
-let direction = { x: scaledSize, y: 0 };  // Initial movement direction
+let direction = { x: gridSize, y: 0 };  // Initial movement direction
 
 // Food position
 let food = { x: 300, y: 300 };  // Initial food position
 
 // Load the snake and food images
 const snakeImage = new Image();
-snakeImage.src = "snake.png";  // Ensure snake.png is big enough for scaling
+snakeImage.src = "snake.png";  // Ensure snake.png is the correct size
 const foodImage = new Image();
-foodImage.src = "food.png";    // Ensure food.png is big enough for scaling
+foodImage.src = "food.png";    // Ensure food.png is the correct size
 
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-  // Draw the snake (with the new 60% larger size)
+  // Draw the snake (without resizing the image)
   for (let i = 0; i < snake.length; i++) {
-    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, scaledSize, scaledSize);
+    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize, gridSize);
   }
 
-  // Draw the food (with the new 60% larger size)
-  ctx.drawImage(foodImage, food.x, food.y, scaledSize, scaledSize);
+  // Draw the food (without resizing the image)
+  ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
 
   // Update the score display
   document.getElementById("score").textContent = `Score: ${score}`;
@@ -94,10 +93,10 @@ function endGame() {
 // Event listener for key presses (arrow keys)
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;  // Don't accept new key presses after the game is over
-  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -scaledSize };
-  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: scaledSize };
-  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -scaledSize, y: 0 };
-  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: scaledSize, y: 0 };
+  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -gridSize };
+  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: gridSize };
+  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
+  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
 });
 
 // Reset the game
@@ -105,7 +104,7 @@ function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
   snake = [{ x: 260, y: 260 }];  // Reset snake position
-  direction = { x: scaledSize, y: 0 };  // Reset initial movement direction
+  direction = { x: gridSize, y: 0 };  // Reset initial movement direction
   score = 0;  // Reset score
   generateFood();  // Generate new food
   gameLoop();  // Restart the game loop
