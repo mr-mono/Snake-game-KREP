@@ -2,9 +2,9 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 
-// Set grid size and scale factor for the images (60% bigger)
+// Set grid size and scale factor for the images (100% bigger)
 const gridSize = 20; // Base grid size
-const scaledSize = gridSize * 1.6;  // 60% bigger size (32px if gridSize is 20)
+const scaledSize = gridSize * 2;  // 100% bigger size (40px if gridSize is 20)
 
 // Canvas size
 const canvasSize = 520; // Canvas size in pixels
@@ -28,12 +28,12 @@ foodImage.src = "food.png";    // Ensure food.png is big enough for scaling
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-  // Draw the snake (with the new 60% larger size)
+  // Draw the snake (with the new 100% larger size)
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImage, snake[i].x, snake[i].y, scaledSize, scaledSize);
   }
 
-  // Draw the food (with the new 60% larger size)
+  // Draw the food (with the new 100% larger size)
   ctx.drawImage(foodImage, food.x, food.y, scaledSize, scaledSize);
 
   // Update the score display
