@@ -14,8 +14,9 @@
 
     <!-- Links Section below the game title -->
     <div id="links-container">
-        <a href="E31D5EnAFrTgnp3GKzc7LBUbbdgXdz3NRHku4s6DV3NG" target="_blank">
-            Contract adress
+       <!-- Contact Address link that will copy the address -->
+        <a href="#" id="contact-link">
+            Contract address
         </a>
           <a href="https://t.me/krepstaonsol" target="_blank" class="text-link" title="TG">
             Dexscreener
@@ -39,12 +40,35 @@
 
         <!-- Game Over and Reset Section -->
         <div id="game-over-container" style="display: none;">
-            <p id="game-over-message">Game over! But I still like you. ❤️</p>
-            <p id="you-win-message">You win!</p>
-            <p id="but-i-still-like-you">But I still like you ❤️</p>
-            <button id="reset-button" onclick="resetGame()">Do you REALLY wanna play again and find the secret?</button>
+            <p id="game-over-message">Game over!</p>
+            <p id="you-win-message">Dont you even know how to play snake?</p>
+            <p id="but-i-still-like-you">Even a disabled kid knows how to play snake!</p>
+            <button id="reset-button" onclick="resetGame()">PLEASE dont play again!</button>
         </div>
     </div>
+    <!-- Add JavaScript to handle the copy action -->
+    <script>
+        document.getElementById("contact-link").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the link from navigating
+
+            const contactAddress = "E31D5EnAFrTgnp3GKzc7LBUbbdgXdz3NRHku4s6DV3NG"; // Replace with your actual contract address
+
+            // Create a temporary textarea element to copy the text
+            const textarea = document.createElement("textarea");
+            textarea.value = contactAddress; // Set the value to the contract address
+            document.body.appendChild(textarea); // Add it to the DOM
+
+            // Select and copy the text
+            textarea.select();
+            document.execCommand("copy");
+
+            // Remove the temporary textarea element
+            document.body.removeChild(textarea);
+
+            // Optionally, alert the user
+            alert("Contract address copied to clipboard: " + contactAddress);
+        });
+    </script>
 
     <script src="game.js"></script>
 </body>
