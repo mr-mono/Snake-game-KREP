@@ -66,15 +66,23 @@ function moveSnake() {
   // Check if the snake has eaten the food
   if (head.x === food.x && head.y === food.y) {
     score += 10;
-    generateFood();
+    generateFood();  // Generate new food after eating
   } else {
     snake.pop();  // Remove the last segment if no food was eaten
   }
 }
 
 function generateFood() {
+  // Ensure food is placed on the grid (multiples of gridSize)
   food.x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
   food.y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
+
+  // Prevent food from appearing where the snake is
+  for (let i = 0; i < snake.length; i++) {
+    if (food.x === snake[i].x && food.y === snake[i].y) {
+      generateFood();  // Try again if food overlaps with the snake
+    }
+  }
 }
 
 function endGame() {
