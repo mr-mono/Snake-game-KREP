@@ -2,7 +2,7 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 const gridSize = 20 * 1.3; // 30% bigger grid
-const canvasSize = 520;    // 30% bigger canvas size
+const canvasSize = 520;    // Game window size
 let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
