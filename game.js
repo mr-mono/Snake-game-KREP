@@ -6,17 +6,20 @@ const ctx = canvas.getContext("2d");
 const gridSize = 20; // Base grid size
 const scaledSize = gridSize * 2;  // 100% bigger size (40px if gridSize is 20)
 
-// Canvas size
-const canvasSize = 520; // Canvas size in pixels
+// Increased canvas size
+const canvasSize = 640;  // Increased canvas size (640px x 640px)
+canvas.width = canvasSize;
+canvas.height = canvasSize;
+
 let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
-let snake = [{ x: 130, y: 130 }];
+let snake = [{ x: 260, y: 260 }];
 let direction = { x: scaledSize, y: 0 };
 
 // Food position
-let food = { x: 260, y: 260 };
+let food = { x: 300, y: 300 };
 
 // Load the snake and food images
 const snakeImage = new Image();
@@ -93,7 +96,7 @@ document.addEventListener("keydown", (e) => {
 function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
-  snake = [{ x: 130, y: 130 }];
+  snake = [{ x: 260, y: 260 }];
   direction = { x: scaledSize, y: 0 };
   score = 0;
   generateFood();
@@ -105,7 +108,7 @@ let gameLoopID;
 function gameLoop() {
   moveSnake();
   draw();
-  gameLoopID = setTimeout(gameLoop, 100);  // Repeat every 100ms (controls speed)
+  gameLoopID = setTimeout(gameLoop, 150);  // Increase the interval to slow down snake movement (150ms)
 }
 
 // Start the game
