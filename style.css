@@ -112,3 +112,27 @@ canvas {
 #reset-button {
     animation: buttonTextAnimation 2s ease-in-out infinite; /* Loop the animation */
 }
+
+/* Links section */
+#links-container {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #333;
+}
+
+#links-container a {
+    color: #0066cc;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#links-container a:hover {
+    color: #003366;
+}
