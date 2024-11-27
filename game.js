@@ -1,14 +1,15 @@
 // Game setup
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
-const gridSize = 20 * 1.3; // 30% bigger grid
+const gridSize = 20; // Normal grid size
+const scaledSize = gridSize * 1.3; // 30% bigger size
 const canvasSize = 520;    // Game window size
 let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
 let snake = [{ x: 130, y: 130 }];
-let direction = { x: gridSize, y: 0 };
+let direction = { x: scaledSize, y: 0 };
 
 // Food position
 let food = { x: 260, y: 260 };
@@ -25,11 +26,11 @@ function draw() {
 
   // Draw the snake (with the new larger size)
   for (let i = 0; i < snake.length; i++) {
-    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize * 1.3, gridSize * 1.3);
+    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, scaledSize, scaledSize);
   }
 
   // Draw the food (with the new larger size)
-  ctx.drawImage(foodImage, food.x, food.y, gridSize * 1.3, gridSize * 1.3);
+  ctx.drawImage(foodImage, food.x, food.y, scaledSize, scaledSize);
 
   // Update the score display
   document.getElementById("score").textContent = score;
@@ -78,10 +79,10 @@ function endGame() {
 // Event listener for key presses (arrow keys)
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;  // Don't accept new key presses after the game is over
-  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -gridSize };
-  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: gridSize };
-  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
-  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
+  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -scaledSize };
+  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: scaledSize };
+  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -scaledSize, y: 0 };
+  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: scaledSize, y: 0 };
 });
 
 // Reset the game
@@ -89,7 +90,7 @@ function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
   snake = [{ x: 130, y: 130 }];
-  direction = { x: gridSize, y: 0 };
+  direction = { x: scaledSize, y: 0 };
   score = 0;
   generateFood();
   gameLoop();  // Restart the game loop
