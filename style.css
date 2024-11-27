@@ -38,10 +38,13 @@ body {
     font-size: 14px;
     color: #333;
     text-align: center; /* Center-align the links */
+    background-color: #333; /* Darker background for links section */
+    padding: 10px; /* Padding around the links */
+    border-radius: 5px; /* Rounded corners for the links container */
 }
 
 #links-container a {
-    color: #0066cc;
+    color: #ffffff; /* White color for the links */
     text-decoration: none;
     margin-bottom: 10px;
     font-weight: bold;
@@ -49,7 +52,7 @@ body {
 }
 
 #links-container a:hover {
-    color: #003366;
+    color: #ff6600; /* Orange hover effect for better visibility */
 }
 
 .text-link {
@@ -61,7 +64,7 @@ body {
 #score-container {
     margin-top: 10px;
     font-size: 18px;
-    color: #333;
+    color: white; /* Set the score text color to white */
 }
 
 #game-container {
