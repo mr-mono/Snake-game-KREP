@@ -65,6 +65,11 @@ body {
     margin-top: 10px;
     font-size: 18px;
     color: white; /* Set the score text color to white */
+    background-color: #808080;  /* Grey background for the scoreboard */
+    padding: 10px 20px;  /* Padding to make the text more readable */
+    border-radius: 5px;  /* Optional: Adds rounded corners */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);  /* Optional: Adds a subtle shadow for depth */
+    text-align: center;  /* Center the text */
 }
 
 #game-container {
