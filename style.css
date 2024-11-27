@@ -10,7 +10,7 @@ body {
     margin: 0;
     
     /* Background image settings */
-    background-image: url('https://github.com/Noobiecoderlol/Snake-game-KREP/blob/main/Background.jpg');
+    background-image: url('https://github.com/Noobiecoderlol/Snake-game-KREP/blob/main/Background.jpg?raw=true');
     background-size: cover; /* Cover the entire viewport */
     background-position: center center; /* Center the image */
     background-attachment: fixed; /* Keeps the image fixed while scrolling */
