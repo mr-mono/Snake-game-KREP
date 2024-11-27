@@ -13,9 +13,9 @@ canvas.height = canvasSize;
 let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
-// Snake initial position and body (start from the bottom)
-let snake = [{ x: 260, y: canvas.height - gridSize }];  // Snake starts at the bottom
-let direction = { x: gridSize, y: 0 };  // Initial movement direction
+// Snake initial position and body (start slightly above the bottom)
+let snake = [{ x: 260, y: canvas.height - (2 * gridSize) }];  // Snake starts slightly higher from the bottom
+let direction = { x: 0, y: -gridSize };  // Initial movement direction is UP
 
 // Food position
 let food = { x: 300, y: 300 };  // Initial food position
@@ -103,8 +103,10 @@ document.addEventListener("keydown", (e) => {
 function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
-  snake = [{ x: 260, y: 260 }];  // Reset snake position
-  direction = { x: gridSize, y: 0 };  // Reset initial movement direction
+  
+  // Reset snake position (slightly higher from the bottom) and direction to UP
+  snake = [{ x: 260, y: canvas.height - (2 * gridSize) }];
+  direction = { x: 0, y: -gridSize };  // Initial direction is UP
   score = 0;  // Reset score
   generateFood();  // Generate new food
   gameLoop();  // Restart the game loop
