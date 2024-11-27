@@ -17,17 +17,18 @@
         <span id="score">Score: 0</span>
     </div>
 
-    <!-- Game area and Game Over message -->
-    <div id="game-container">
-        <!-- No need to set the width and height here, as it's handled by JavaScript -->
-        <canvas id="game-board"></canvas>
+<!-- Game area and Game Over message -->
+<div id="game-container">
+    <canvas id="game-board" width="520" height="520"></canvas>
 
-        <!-- Game Over and Reset Section -->
-        <div id="game-over-container" style="display: none;">
-            <p id="game-over-message">Game over! YOU SUCK! But i still like you. Like a mother loves a retard ❤️</p>
-            <button id="reset-button" onclick="resetGame()">Please dont press this button to play again... You MIGHT find a secret</button>
-        </div>
+    <!-- Game Over and Reset Section -->
+    <div id="game-over-container" style="display: none;">
+        <p id="game-over-message">Game over!</p>
+        <p id="you-win-message">You fucking loser!</p>
+        <p id="but-i-still-like-you">KREP still loves you tho❤️ Like a mother loves her retarded child ❤️!</p>
+        <button id="reset-button" onclick="resetGame()">DONT push this button to play again!Seriously! You will catch a STD!</button>
     </div>
+</div>
 
     <script src="game.js"></script>
 </body>
