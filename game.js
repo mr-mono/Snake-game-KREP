@@ -13,8 +13,8 @@ canvas.height = canvasSize;
 let score = 0;
 let gameOver = false;  // Flag to check if the game is over
 
-// Snake initial position and body
-let snake = [{ x: 260, y: 260 }];  // Snake starts in the center
+// Snake initial position and body (start from the bottom)
+let snake = [{ x: 260, y: canvas.height - gridSize }];  // Snake starts at the bottom
 let direction = { x: gridSize, y: 0 };  // Initial movement direction
 
 // Food position
