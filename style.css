@@ -53,8 +53,8 @@ body {
 }
 
 .icon-link svg {
-    width: 30px;
-    height: 30px;
+    width: 25px;   /* Adjusted size of the icons */
+    height: 25px;
     transition: transform 0.2s ease; /* Add transition for scaling */
 }
 
