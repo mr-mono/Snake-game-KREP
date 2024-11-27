@@ -10,7 +10,7 @@ body {
     margin: 0;
     
     /* Background image settings */
-    background-image: url('https://github.com/Noobiecoderlol/Snake-game-KREP/blob/main/Background.jpg?raw=true');
+    background-image: url('https://raw.githubusercontent.com/Noobiecoderlol/Snake-game-KREP/main/Background.jpg'); /* Correct raw URL */
     background-size: cover; /* Cover the entire viewport */
     background-position: center center; /* Center the image */
     background-attachment: fixed; /* Keeps the image fixed while scrolling */
@@ -75,6 +75,7 @@ body {
 canvas {
     border: 2px solid black;
     display: block;
+    background-color: white; /* Set the canvas background to white */
 }
 
 #game-over-container {
