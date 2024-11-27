@@ -52,6 +52,26 @@ canvas {
     text-align: center;
     color: red;
     font-size: 20px;
+    display: flex;
+    flex-direction: column; /* Stack the text vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+#game-over-message {
+    margin-bottom: 10px; /* Space between "Game over!" and "You win!" */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#you-win-message {
+    margin-bottom: 20px; /* Space between "You win!" and "But I still like you" */
+    font-size: 20px;
+}
+
+#but-i-still-like-you {
+    font-size: 18px;
+    font-style: italic;
 }
 
 #reset-button {
