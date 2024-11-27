@@ -5,15 +5,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
     margin: 0;
-    
+
     /* Background image settings */
     background-image: url('https://raw.githubusercontent.com/Noobiecoderlol/Snake-game-KREP/main/Background.jpg'); /* Correct raw URL */
-    background-size: cover; /* Cover the entire viewport */
-    background-position: center center; /* Center the image */
-    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    background-size: cover; /* Make the background cover the entire screen */
+    background-position: center center; /* Center the background image */
+    background-attachment: fixed; /* Keep the background fixed while scrolling */
     color: white; /* Adjust text color for better visibility */
 }
 
