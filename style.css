@@ -15,22 +15,14 @@ body {
     margin-bottom: 20px; /* Space between title and score */
 }
 
-/* Rainbow animation for the title */
-@keyframes rainbowText {
-    0% { color: red; }
-    14% { color: orange; }
-    28% { color: yellow; }
-    42% { color: green; }
-    57% { color: blue; }
-    71% { color: indigo; }
-    85% { color: violet; }
-    100% { color: red; }
-}
-
 #title-container h1 {
     font-size: 36px;
     margin: 0;
-    animation: rainbowText 3s infinite; /* Apply the rainbow animation */
+    
+    /* Rainbow gradient text effect */
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text; /* For Chrome, Safari, and newer versions of Edge */
+    color: transparent; /* Make the text transparent so the background gradient shows */
 }
 
 #score-container {
