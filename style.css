@@ -8,6 +8,13 @@ body {
     min-height: 100vh;
     background-color: #f4f4f4;
     margin: 0;
+    
+    /* Background image settings */
+    background-image: url('https://github.com/Noobiecoderlol/Snake-game-KREP/blob/main/Background.jpg');
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    color: white; /* Adjust text color for better visibility */
 }
 
 #title-container {
