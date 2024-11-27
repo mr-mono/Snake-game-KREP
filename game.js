@@ -1,12 +1,13 @@
 // Game setup
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
-const gridSize = 20 * 1.3; // 30% bigger
+const gridSize = 20 * 1.3; // 30% bigger grid
 const canvasSize = 520;    // 30% bigger canvas size
 let score = 0;
+let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body
-let snake = [{ x: 130, y: 130 }]; // Adjust starting position if necessary
+let snake = [{ x: 130, y: 130 }];
 let direction = { x: gridSize, y: 0 };
 
 // Food position
@@ -35,17 +36,19 @@ function draw() {
 }
 
 function moveSnake() {
+  if (gameOver) return;  // If the game is over, don't move the snake
+
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Check for collision with walls
   if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
-    resetGame();
+    endGame(); // Game over if the snake hits the wall
   }
 
   // Check for collision with itself
   for (let i = 0; i < snake.length; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
-      resetGame();
+      endGame(); // Game over if the snake collides with itself
     }
   }
 
@@ -66,26 +69,38 @@ function generateFood() {
   food.y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
 }
 
-function resetGame() {
-  snake = [{ x: 130, y: 130 }];
-  direction = { x: gridSize, y: 0 };
-  score = 0;
-  generateFood();
+function endGame() {
+  gameOver = true;  // Set the gameOver flag to true
+  clearTimeout(gameLoopID);  // Stop the game loop
+  document.getElementById("game-over-container").style.display = "block"; // Show game over message and button
 }
 
 // Event listener for key presses (arrow keys)
 document.addEventListener("keydown", (e) => {
+  if (gameOver) return;  // Don't accept new key presses after the game is over
   if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -gridSize };
   if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: gridSize };
   if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
   if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
 });
 
+// Reset the game
+function resetGame() {
+  gameOver = false;
+  document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
+  snake = [{ x: 130, y: 130 }];
+  direction = { x: gridSize, y: 0 };
+  score = 0;
+  generateFood();
+  gameLoop();  // Restart the game loop
+}
+
 // Game loop
+let gameLoopID;
 function gameLoop() {
   moveSnake();
   draw();
-  setTimeout(gameLoop, 100);  // Repeat every 100ms (controls speed)
+  gameLoopID = setTimeout(gameLoop, 100);  // Repeat every 100ms (controls speed)
 }
 
 // Start the game
