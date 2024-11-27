@@ -83,8 +83,32 @@ canvas {
     color: white;
     border: none;
     border-radius: 5px;
+    text-align: center; /* Centers the text horizontally */
+    line-height: 1.4; /* Adjust line height for the vertical stack */
+    font-weight: bold; /* Makes the text bold */
+    white-space: normal; /* Allows the text to wrap to new lines */
 }
 
 #reset-button:hover {
     background-color: #45a049;
+}
+
+/* Add a bit of animation for fun */
+@keyframes buttonTextAnimation {
+    0% {
+        color: white;
+        transform: scale(1);
+    }
+    50% {
+        color: #FFD700; /* Change color to gold */
+        transform: scale(1.2); /* Slightly increase size */
+    }
+    100% {
+        color: white;
+        transform: scale(1);
+    }
+}
+
+#reset-button {
+    animation: buttonTextAnimation 2s ease-in-out infinite; /* Loop the animation */
 }
