@@ -7,18 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Title of the game placed above the canvas -->
     <div id="title-container">
         <h1>Krep the Game</h1>
     </div>
 
+    <!-- Score displayed below the title -->
     <div id="score-container">
         <span id="score">Score: 0</span>
     </div>
 
+    <!-- Game area and Game Over message -->
     <div id="game-container">
         <canvas id="game-board" width="520" height="520"></canvas>
 
-        <!-- Game Over and Reset Section (now centered) -->
+        <!-- Game Over and Reset Section -->
         <div id="game-over-container" style="display: none;">
             <p id="game-over-message">Game over! But I still like you. ❤️</p>
             <button id="reset-button" onclick="resetGame()">Do you REALLY wanna play again and find the secret?</button>
