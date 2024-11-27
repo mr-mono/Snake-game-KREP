@@ -2,33 +2,33 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 const gridSize = 20 * 1.3; // 30% bigger
-const canvasSize = 400;
+const canvasSize = 520;    // 30% bigger canvas size
 let score = 0;
 
 // Snake initial position and body
-let snake = [{ x: 100, y: 100 }];
+let snake = [{ x: 130, y: 130 }]; // Adjust starting position if necessary
 let direction = { x: gridSize, y: 0 };
 
 // Food position
-let food = { x: 200, y: 200 };
+let food = { x: 260, y: 260 };
 
 // Load the snake and food images
 const snakeImage = new Image();
-snakeImage.src = "snake.png";  // Replace this with your snake image URL
+snakeImage.src = "snake.png";  // Make sure your snake.png is 30% larger
 const foodImage = new Image();
-foodImage.src = "food.png";    // Replace this with your food image URL
+foodImage.src = "food.png";    // Make sure your food.png is 30% larger
 
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-  // Draw the snake
+  // Draw the snake (with the new larger size)
   for (let i = 0; i < snake.length; i++) {
-    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize, gridSize);
+    ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize * 1.3, gridSize * 1.3);
   }
 
-  // Draw the food
-  ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
+  // Draw the food (with the new larger size)
+  ctx.drawImage(foodImage, food.x, food.y, gridSize * 1.3, gridSize * 1.3);
 
   // Update the score display
   document.getElementById("score").textContent = score;
@@ -67,7 +67,7 @@ function generateFood() {
 }
 
 function resetGame() {
-  snake = [{ x: 100, y: 100 }];
+  snake = [{ x: 130, y: 130 }];
   direction = { x: gridSize, y: 0 };
   score = 0;
   generateFood();
