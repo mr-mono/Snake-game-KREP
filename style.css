@@ -45,23 +45,12 @@ body {
     color: #003366;
 }
 
-/* Style for icons (Telegram, X) */
-.icon-link {
-    display: inline-block;
-    margin-right: 15px; /* Space between the icons */
-    margin-bottom: 10px; /* Space between the icons */
+.text-link {
+    font-size: 18px;  /* Adjust text size */
+    margin-bottom: 10px;
 }
 
-.icon-link svg {
-    width: 25px;   /* Adjusted size of the icons */
-    height: 25px;
-    transition: transform 0.2s ease; /* Add transition for scaling */
-}
-
-.icon-link:hover svg {
-    transform: scale(1.2); /* Slightly scale the icon on hover */
-}
-
+/* Score section */
 #score-container {
     margin-top: 10px;
     font-size: 18px;
