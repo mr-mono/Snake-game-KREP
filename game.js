@@ -1,7 +1,7 @@
 // Game setup
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
-const gridSize = 20;
+const gridSize = 20 * 1.3; // 30% bigger
 const canvasSize = 400;
 let score = 0;
 
