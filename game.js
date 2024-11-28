@@ -12,6 +12,9 @@ const ctx = canvas.getContext("2d");
 // Set base grid size (normal size without scaling)
 const baseGridSize = 20;
 
+// Define initial game speed (in milliseconds)
+let gameSpeed = 150; // Initial speed for the game loop
+
 // Calculate canvas size based on screen size
 const calculateCanvasSize = () => {
   const maxWidth = window.innerWidth * 0.9; // 90% of the screen width
@@ -170,6 +173,7 @@ function resetGame() {
   snake = [{ x: Math.floor(canvas.width / 2 / gridSize) * gridSize, y: Math.floor(canvas.height / 2 / gridSize) * gridSize }];
   direction = { x: 0, y: -gridSize };  // Initial direction is UP
   score = 1;  // Reset score to 1
+  gameSpeed = 150; // Reset the game speed to the initial value
   generateFood();  // Generate new food
   gameLoop();  // Restart the game loop
 }
@@ -179,7 +183,7 @@ let gameLoopID;
 function gameLoop() {
   moveSnake();
   draw();
-  gameLoopID = setTimeout(gameLoop, 150);  // Increase the interval to slow down snake movement (150ms)
+  gameLoopID = setTimeout(gameLoop, gameSpeed);  // Use the current game speed
 }
 
 // Start the game
