@@ -2,23 +2,36 @@
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 
-// Set grid size (normal size without scaling)
-const gridSize = 20; // Base grid size (each square of the grid is 20px)
+// Set base grid size (normal size without scaling)
+const baseGridSize = 20;
 
-// Increased canvas size (size remains the same)
-const canvasSize = 640;  // Increased canvas size (640px x 640px)
-canvas.width = canvasSize;
-canvas.height = canvasSize;
+// Calculate canvas size based on screen size
+const calculateCanvasSize = () => {
+  const maxWidth = window.innerWidth * 0.9; // 90% of the screen width
+  const maxHeight = window.innerHeight * 0.7; // 70% of the screen height
 
-let score = 0;
+  // Set canvas size with a maximum limit, maintaining the square aspect ratio
+  const canvasSize = Math.min(maxWidth, maxHeight);
+
+  // Set the canvas width and height
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+
+  // Adjust grid size based on the canvas size
+  return Math.floor(canvasSize / 20); // Scale grid size to fit the screen
+};
+
+let gridSize = calculateCanvasSize();  // Initial grid size calculation based on screen
+
+let score = 1;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body (start slightly above the bottom)
-let snake = [{ x: 260, y: canvas.height - (2 * gridSize) }];  // Snake starts slightly higher from the bottom
+let snake = [{ x: Math.floor(canvas.width / 2 / gridSize) * gridSize, y: Math.floor(canvas.height / 2 / gridSize) * gridSize }];
 let direction = { x: 0, y: -gridSize };  // Initial movement direction is UP
 
 // Food position
-let food = { x: 300, y: 300 };  // Initial food position
+let food = { x: Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize, y: Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize };
 
 // Load the snake and food images
 const snakeImage = new Image();
@@ -48,7 +61,7 @@ function moveSnake() {
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Check for collision with walls
-  if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
+  if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
     endGame(); // Game over if the snake hits the wall
   }
 
@@ -64,7 +77,7 @@ function moveSnake() {
 
   // Check if the snake has eaten the food
   if (head.x === food.x && head.y === food.y) {
-    score += 1;
+    score += 1;  // Increase score by 1
     generateFood();  // Generate new food after eating
   } else {
     snake.pop();  // Remove the last segment if no food was eaten
@@ -73,8 +86,8 @@ function moveSnake() {
 
 function generateFood() {
   // Ensure food is placed on the grid (multiples of gridSize)
-  food.x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-  food.y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
+  food.x = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
+  food.y = Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize;
 
   // Prevent food from appearing where the snake is
   for (let i = 0; i < snake.length; i++) {
@@ -98,6 +111,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
   if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
 });
+
 // Touch control variables
 let touchStartX = 0;
 let touchStartY = 0;
@@ -139,15 +153,16 @@ function handleTouchSwipe() {
     }
   }
 }
+
 // Reset the game
 function resetGame() {
   gameOver = false;
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
   
-  // Reset snake position (slightly higher from the bottom) and direction to UP
-  snake = [{ x: 260, y: canvas.height - (2 * gridSize) }];
+  // Reset snake position and direction to UP
+  snake = [{ x: Math.floor(canvas.width / 2 / gridSize) * gridSize, y: Math.floor(canvas.height / 2 / gridSize) * gridSize }];
   direction = { x: 0, y: -gridSize };  // Initial direction is UP
-  score = 0;  // Reset score
+  score = 1;  // Reset score to 1
   generateFood();  // Generate new food
   gameLoop();  // Restart the game loop
 }
@@ -161,5 +176,9 @@ function gameLoop() {
 }
 
 // Start the game
+window.addEventListener('resize', () => {
+  gridSize = calculateCanvasSize();  // Recalculate grid size on resize
+});
+
 generateFood();
 gameLoop();
