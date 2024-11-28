@@ -167,15 +167,20 @@ function handleTouchSwipe() {
 // Reset the game
 function resetGame() {
   gameOver = false;
+  gameSpeed = initialGameSpeed; // Reset the game speed to initial value
   document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
   
-  // Reset snake position and direction to UP
-  snake = [{ x: Math.floor(canvas.width / 2 / gridSize) * gridSize, y: Math.floor(canvas.height / 2 / gridSize) * gridSize }];
+  // Reset snake position and direction to start further down and move up
+  snake = [{ 
+    x: Math.floor(canvas.width / 2 / gridSize) * gridSize, 
+    y: Math.floor(canvas.height * 0.7 / gridSize) * gridSize // Start 70% down the canvas
+  }];
   direction = { x: 0, y: -gridSize };  // Initial direction is UP
   score = 1;  // Reset score to 1
-  gameSpeed = 150; // Reset the game speed to the initial value
+  
+  clearTimeout(gameLoopID); // Clear any existing game loop timeout
   generateFood();  // Generate new food
-  gameLoop();  // Restart the game loop
+  gameLoop();  // Restart the game loop with the initial game speed
 }
 
 // Game loop
