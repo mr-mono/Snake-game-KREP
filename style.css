@@ -24,11 +24,16 @@ body {
     body {
         background-attachment: scroll; /* Disable fixed background for mobile devices to improve performance */
     }
+
     #game-container {
         width: 90vw;  /* 90% of the screen width for the canvas */
         height: 70vh; /* 70% of the screen height for the canvas */
-        max-width: 90vw;
-        max-height: 70vh;
+        max-width: 100%; /* Ensure game container fits within the viewport width */
+        max-height: 100%; /* Ensure game container fits within the viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
     }
 }
 
