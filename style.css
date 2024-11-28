@@ -15,8 +15,17 @@ body {
     background-position: center center; /* Center the image */
     background-attachment: fixed; /* Keeps the image fixed while scrolling */
     color: white; /* Adjust text color for better visibility */
+    background-repeat: no-repeat; /* Prevent background repetition */
 }
 
+/* Media query to handle mobile screens */
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll; /* Disable fixed background for mobile devices to improve performance */
+    }
+}
+
+/* Rest of your existing styles */
 
 #title-container {
     text-align: center;
