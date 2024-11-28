@@ -208,3 +208,6 @@ window.addEventListener('resize', () => {
 // Call this to generate the initial food and start the loop
 generateFood();
 gameLoop();
+
+// Ensure the "Play Again" button calls the resetGame function
+document.getElementById("reset-button").onclick = resetGame; // Add an event listener to the button
