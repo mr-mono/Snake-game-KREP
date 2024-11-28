@@ -42,7 +42,7 @@
         <div id="game-over-container" style="display: none;">
             <p id="game-over-message">Game over</p>
             <p id="you-win-message">->Shitty player detected!<-</p>
-            <button id="reset-button" onclick="resetGame()">PLEASE dont play again!</button>
+            <button id="reset-button">PLEASE dont play again!</button>
         </div>
     </div>
     <!-- Add JavaScript to handle the copy action -->
@@ -66,6 +66,8 @@
 
             // Optionally, alert the user
             alert("Contract address copied to clipboard: " + contactAddress);
+// Add event listener for the reset button to trigger the resetGame function
+        document.getElementById("reset-button").addEventListener("click", resetGame);
         });
     </script>
 
