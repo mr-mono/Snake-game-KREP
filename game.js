@@ -13,7 +13,8 @@ const ctx = canvas.getContext("2d");
 const baseGridSize = 20;
 
 // Define initial game speed (in milliseconds)
-let gameSpeed = 150; // Initial speed for the game loop
+const initialGameSpeed = 150; // Initial speed for the game loop
+let gameSpeed = initialGameSpeed; // Initial game speed
 
 // Calculate canvas size based on screen size
 const calculateCanvasSize = () => {
@@ -37,7 +38,10 @@ let score = 1;
 let gameOver = false;  // Flag to check if the game is over
 
 // Snake initial position and body (start slightly above the bottom)
-let snake = [{ x: Math.floor(canvas.width / 2 / gridSize) * gridSize, y: Math.floor(canvas.height / 2 / gridSize) * gridSize }];
+let snake = [{ 
+  x: Math.floor(canvas.width / 2 / gridSize) * gridSize, 
+  y: Math.floor(canvas.height * 0.7 / gridSize) * gridSize // Start 70% down the canvas
+}];
 let direction = { x: 0, y: -gridSize };  // Initial movement direction is UP
 
 // Food position
@@ -166,35 +170,41 @@ function handleTouchSwipe() {
 
 // Reset the game
 function resetGame() {
+  if (gameLoopID) {
+    clearTimeout(gameLoopID); // Stop any existing game loop
+  }
+
   gameOver = false;
-  gameSpeed = initialGameSpeed; // Reset the game speed to initial value
-  document.getElementById("game-over-container").style.display = "none";  // Hide the game over message
+  gameSpeed = initialGameSpeed; // Reset the game speed
+  document.getElementById("game-over-container").style.display = "none"; // Hide the game over message
   
   // Reset snake position and direction to start further down and move up
   snake = [{ 
     x: Math.floor(canvas.width / 2 / gridSize) * gridSize, 
     y: Math.floor(canvas.height * 0.7 / gridSize) * gridSize // Start 70% down the canvas
   }];
-  direction = { x: 0, y: -gridSize };  // Initial direction is UP
-  score = 1;  // Reset score to 1
+  direction = { x: 0, y: -gridSize }; // Initial direction is UP
+  score = 1; // Reset score to 1
   
-  clearTimeout(gameLoopID); // Clear any existing game loop timeout
-  generateFood();  // Generate new food
-  gameLoop();  // Restart the game loop with the initial game speed
+  generateFood(); // Generate new food
+  gameLoop(); // Restart the game loop with the initial game speed
 }
 
-// Game loop
+// Game loop function
 let gameLoopID;
 function gameLoop() {
-  moveSnake();
-  draw();
-  gameLoopID = setTimeout(gameLoop, gameSpeed);  // Use the current game speed
+  if (!gameOver) {
+    moveSnake();
+    draw();
+    gameLoopID = setTimeout(gameLoop, gameSpeed); // Schedule next iteration
+  }
 }
 
-// Start the game
+// Add this to ensure that the game starts properly when the window is resized
 window.addEventListener('resize', () => {
-  gridSize = calculateCanvasSize();  // Recalculate grid size on resize
+  gridSize = calculateCanvasSize(); // Recalculate grid size on resize
 });
 
+// Call this to generate the initial food and start the loop
 generateFood();
 gameLoop();
