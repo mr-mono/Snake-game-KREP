@@ -1,3 +1,10 @@
+// Prevent page refresh on mobile (pull-to-refresh)
+if ('ontouchstart' in window || navigator.maxTouchPoints) {
+    window.addEventListener('touchmove', function(event) {
+        event.preventDefault(); // Disable pull-to-refresh behavior
+    }, { passive: false });
+}
+
 // Game setup
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
