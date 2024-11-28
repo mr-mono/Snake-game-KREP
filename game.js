@@ -39,7 +39,7 @@ function draw() {
   ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
 
   // Update the score display
-  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("score").textContent = `solami ${score}`;  // Display "solami" with the score
 }
 
 function moveSnake() {
@@ -64,7 +64,7 @@ function moveSnake() {
 
   // Check if the snake has eaten the food
   if (head.x === food.x && head.y === food.y) {
-    score += 10;
+    score += 1;
     generateFood();  // Generate new food after eating
   } else {
     snake.pop();  // Remove the last segment if no food was eaten
