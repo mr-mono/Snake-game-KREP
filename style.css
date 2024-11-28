@@ -6,8 +6,8 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: black;  /* Set background to black */
     margin: 0;
+    background-color: black;  /* Set background to black */
     
     /* Background image settings */
     background-image: url('https://raw.githubusercontent.com/Noobiecoderlol/Snake-game-KREP/main/Background.jpg'); /* Correct raw URL */
@@ -16,6 +16,7 @@ body {
     background-attachment: fixed; /* Keeps the image fixed while scrolling */
     color: white; /* Adjust text color for better visibility */
     background-repeat: no-repeat; /* Prevent background repetition */
+    overflow: hidden; /* Prevent scrolling */
 }
 
 /* Media query to handle mobile screens */
@@ -24,8 +25,10 @@ body {
         background-attachment: scroll; /* Disable fixed background for mobile devices to improve performance */
     }
     #game-container {
-        max-width: 90vw;  /* 90% of the screen width for the canvas */
-        max-height: 70vh; /* 70% of the screen height for the canvas */
+        width: 90vw;  /* 90% of the screen width for the canvas */
+        height: 70vh; /* 70% of the screen height for the canvas */
+        max-width: 90vw;
+        max-height: 70vh;
     }
 }
 
@@ -93,20 +96,23 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 640px;  /* Default max width for canvas */
-    max-height: 640px; /* Default max height for canvas */
-    width: 100%;
-    height: 100%;
+    width: 640px;  /* Default width for canvas */
+    height: 640px; /* Default height for canvas */
+    max-width: 100vw;
+    max-height: 100vh;
     padding: 10px;
+    overflow: hidden; /* Prevent overflow */
+    box-sizing: border-box; /* Prevent padding from increasing the size */
+    margin: 0 auto;  /* Center the game container */
 }
 
 /* Canvas styling */
 canvas {
+    width: 100%;  /* Canvas width takes up 100% of its container */
+    height: 100%; /* Canvas height takes up 100% of its container */
     border: 2px solid black;
     display: block;
     background-color: white; /* Set the canvas background to white */
-    width: 100%;  /* Canvas width takes up 100% of its container */
-    height: 100%; /* Canvas height takes up 100% of its container */
 }
 
 /* Game over message container */
