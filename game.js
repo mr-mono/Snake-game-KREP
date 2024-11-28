@@ -98,7 +98,47 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
   if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
 });
+// Touch control variables
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
 
+// Touch events for mobile controls
+canvas.addEventListener("touchstart", (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+});
+
+canvas.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].clientX;
+  touchEndY = e.changedTouches[0].clientY;
+  
+  handleTouchSwipe();
+});
+
+function handleTouchSwipe() {
+  // Calculate swipe direction
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+
+  // If swipe is mostly horizontal
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0 && direction.x === 0) {  // Swipe right
+      direction = { x: gridSize, y: 0 };
+    } else if (deltaX < 0 && direction.x === 0) {  // Swipe left
+      direction = { x: -gridSize, y: 0 };
+    }
+  }
+  // If swipe is mostly vertical
+  else {
+    if (deltaY > 0 && direction.y === 0) {  // Swipe down
+      direction = { x: 0, y: gridSize };
+    } else if (deltaY < 0 && direction.y === 0) {  // Swipe up
+      direction = { x: 0, y: -gridSize };
+    }
+  }
+}
 // Reset the game
 function resetGame() {
   gameOver = false;
