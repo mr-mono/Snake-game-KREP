@@ -147,25 +147,38 @@ canvas.addEventListener("touchend", (e) => {
 
 // Mouse control for directional input
 canvas.addEventListener("click", (event) => {
-  const canvasRect = canvas.getBoundingClientRect(); // Get canvas position and size
-  const clickX = event.clientX - canvasRect.left;    // X position relative to canvas
-  const clickY = event.clientY - canvasRect.top;     // Y position relative to canvas
+  if (gameOver) return; // Ignore clicks if the game is over
 
-  const snakeHead = snake[0];                        // Get snake head position
-  const snakeCenterX = snakeHead.x + gridSize / 2;   // Center X of the snake head
-  const snakeCenterY = snakeHead.y + gridSize / 2;   // Center Y of the snake head
+  // Get canvas position and size
+  const canvasRect = canvas.getBoundingClientRect();
+  const clickX = event.clientX - canvasRect.left; // X position relative to canvas
+  const clickY = event.clientY - canvasRect.top; // Y position relative to canvas
 
-  // Determine new direction based on click position
-  if (clickX > snakeCenterX && direction.x === 0) {
-    direction = { x: gridSize, y: 0 }; // Move RIGHT
-  } else if (clickX < snakeCenterX && direction.x === 0) {
-    direction = { x: -gridSize, y: 0 }; // Move LEFT
-  } else if (clickY > snakeCenterY && direction.y === 0) {
-    direction = { x: 0, y: gridSize }; // Move DOWN
-  } else if (clickY < snakeCenterY && direction.y === 0) {
-    direction = { x: 0, y: -gridSize }; // Move UP
+  // Get the current snake head position
+  const snakeHead = snake[0];
+
+  // Compare click position to snake head
+  const deltaX = clickX - (snakeHead.x + gridSize / 2); // Horizontal distance
+  const deltaY = clickY - (snakeHead.y + gridSize / 2); // Vertical distance
+
+  // Determine the dominant movement direction
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    // Horizontal movement
+    if (deltaX > 0 && direction.x === 0) {
+      direction = { x: gridSize, y: 0 }; // Move RIGHT
+    } else if (deltaX < 0 && direction.x === 0) {
+      direction = { x: -gridSize, y: 0 }; // Move LEFT
+    }
+  } else {
+    // Vertical movement
+    if (deltaY > 0 && direction.y === 0) {
+      direction = { x: 0, y: gridSize }; // Move DOWN
+    } else if (deltaY < 0 && direction.y === 0) {
+      direction = { x: 0, y: -gridSize }; // Move UP
+    }
   }
 });
+
 
 function handleTouchSwipe() {
   // Calculate swipe direction
