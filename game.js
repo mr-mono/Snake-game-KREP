@@ -125,6 +125,50 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
   if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
 });
+// Track left mouse button state
+let isMousePressed = false;
+
+// Event listener for mouse down (left button press)
+canvas.addEventListener("mousedown", (e) => {
+  if (e.button === 0) { // Check if the left mouse button is pressed
+    isMousePressed = true;
+  }
+});
+
+// Event listener for mouse up (left button release)
+canvas.addEventListener("mouseup", (e) => {
+  if (e.button === 0) { // Check if the left mouse button is released
+    isMousePressed = false;
+  }
+});
+
+// Event listener for mouse movement
+canvas.addEventListener("mousemove", (e) => {
+  if (!isMousePressed || gameOver) return; // Do nothing if mouse is not pressed or game is over
+
+  const canvasRect = canvas.getBoundingClientRect();
+  const mouseX = e.clientX - canvasRect.left;
+  const mouseY = e.clientY - canvasRect.top;
+
+  const snakeHead = snake[0];
+
+  const deltaX = mouseX - (snakeHead.x + gridSize / 2);
+  const deltaY = mouseY - (snakeHead.y + gridSize / 2);
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0 && direction.x === 0) {
+      direction = { x: gridSize, y: 0 }; // Move RIGHT
+    } else if (deltaX < 0 && direction.x === 0) {
+      direction = { x: -gridSize, y: 0 }; // Move LEFT
+    }
+  } else {
+    if (deltaY > 0 && direction.y === 0) {
+      direction = { x: 0, y: gridSize }; // Move DOWN
+    } else if (deltaY < 0 && direction.y === 0) {
+      direction = { x: 0, y: -gridSize }; // Move UP
+    }
+  }
+});
 
 // Touch control variables
 let touchStartX = 0;
