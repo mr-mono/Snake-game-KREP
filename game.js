@@ -145,6 +145,28 @@ canvas.addEventListener("touchend", (e) => {
   handleTouchSwipe();
 });
 
+// Mouse control for directional input
+canvas.addEventListener("click", (event) => {
+  const canvasRect = canvas.getBoundingClientRect(); // Get canvas position and size
+  const clickX = event.clientX - canvasRect.left;    // X position relative to canvas
+  const clickY = event.clientY - canvasRect.top;     // Y position relative to canvas
+
+  const snakeHead = snake[0];                        // Get snake head position
+  const snakeCenterX = snakeHead.x + gridSize / 2;   // Center X of the snake head
+  const snakeCenterY = snakeHead.y + gridSize / 2;   // Center Y of the snake head
+
+  // Determine new direction based on click position
+  if (clickX > snakeCenterX && direction.x === 0) {
+    direction = { x: gridSize, y: 0 }; // Move RIGHT
+  } else if (clickX < snakeCenterX && direction.x === 0) {
+    direction = { x: -gridSize, y: 0 }; // Move LEFT
+  } else if (clickY > snakeCenterY && direction.y === 0) {
+    direction = { x: 0, y: gridSize }; // Move DOWN
+  } else if (clickY < snakeCenterY && direction.y === 0) {
+    direction = { x: 0, y: -gridSize }; // Move UP
+  }
+});
+
 function handleTouchSwipe() {
   // Calculate swipe direction
   const deltaX = touchEndX - touchStartX;
