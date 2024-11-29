@@ -53,6 +53,10 @@ snakeImage.src = "snake.png";  // Ensure snake.png is the correct size
 const foodImage = new Image();
 foodImage.src = "food.png";    // Ensure food.png is the correct size
 
+// Variables for touch tracking
+let touchX = 0;
+let touchY = 0;
+
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
@@ -117,44 +121,20 @@ function endGame() {
   document.getElementById("game-over-container").style.display = "block"; // Show game over message and button
 }
 
-// Event listener for key presses (arrow keys)
-document.addEventListener("keydown", (e) => {
-  if (gameOver) return;  // Don't accept new key presses after the game is over
-  if (e.key === "ArrowUp" && direction.y === 0) direction = { x: 0, y: -gridSize };
-  if (e.key === "ArrowDown" && direction.y === 0) direction = { x: 0, y: gridSize };
-  if (e.key === "ArrowLeft" && direction.x === 0) direction = { x: -gridSize, y: 0 };
-  if (e.key === "ArrowRight" && direction.x === 0) direction = { x: gridSize, y: 0 };
-});
-// Track left mouse button state
-let isMousePressed = false;
-
-// Event listener for mouse down (left button press)
-canvas.addEventListener("mousedown", (e) => {
-  if (e.button === 0) { // Check if the left mouse button is pressed
-    isMousePressed = true;
-  }
-});
-
-// Event listener for mouse up (left button release)
-canvas.addEventListener("mouseup", (e) => {
-  if (e.button === 0) { // Check if the left mouse button is released
-    isMousePressed = false;
-  }
-});
-
-// Event listener for mouse movement
-canvas.addEventListener("mousemove", (e) => {
-  if (!isMousePressed || gameOver) return; // Do nothing if mouse is not pressed or game is over
-
-  const canvasRect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - canvasRect.left;
-  const mouseY = e.clientY - canvasRect.top;
-
+// Update direction based on touch position
+function updateSnakeDirection() {
   const snakeHead = snake[0];
 
-  const deltaX = mouseX - (snakeHead.x + gridSize / 2);
-  const deltaY = mouseY - (snakeHead.y + gridSize / 2);
+  // Convert touch position to canvas coordinates
+  const canvasRect = canvas.getBoundingClientRect();
+  const touchCanvasX = touchX - canvasRect.left;
+  const touchCanvasY = touchY - canvasRect.top;
 
+  // Calculate the difference between touch and snake head
+  const deltaX = touchCanvasX - (snakeHead.x + gridSize / 2);
+  const deltaY = touchCanvasY - (snakeHead.y + gridSize / 2);
+
+  // Update direction based on the touch position
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
     if (deltaX > 0 && direction.x === 0) {
       direction = { x: gridSize, y: 0 }; // Move RIGHT
@@ -166,86 +146,20 @@ canvas.addEventListener("mousemove", (e) => {
       direction = { x: 0, y: gridSize }; // Move DOWN
     } else if (deltaY < 0 && direction.y === 0) {
       direction = { x: 0, y: -gridSize }; // Move UP
-    }
-  }
-});
-
-// Touch control variables
-let touchStartX = 0;
-let touchStartY = 0;
-let touchEndX = 0;
-let touchEndY = 0;
-
-// Touch events for mobile controls
-canvas.addEventListener("touchstart", (e) => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-});
-
-canvas.addEventListener("touchend", (e) => {
-  touchEndX = e.changedTouches[0].clientX;
-  touchEndY = e.changedTouches[0].clientY;
-  
-  handleTouchSwipe();
-});
-
-// Mouse control for directional input
-canvas.addEventListener("click", (event) => {
-  if (gameOver) return; // Ignore clicks if the game is over
-
-  // Get canvas position and size
-  const canvasRect = canvas.getBoundingClientRect();
-  const clickX = event.clientX - canvasRect.left; // X position relative to canvas
-  const clickY = event.clientY - canvasRect.top; // Y position relative to canvas
-
-  // Get the current snake head position
-  const snakeHead = snake[0];
-
-  // Compare click position to snake head
-  const deltaX = clickX - (snakeHead.x + gridSize / 2); // Horizontal distance
-  const deltaY = clickY - (snakeHead.y + gridSize / 2); // Vertical distance
-
-  // Determine the dominant movement direction
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    // Horizontal movement
-    if (deltaX > 0 && direction.x === 0) {
-      direction = { x: gridSize, y: 0 }; // Move RIGHT
-    } else if (deltaX < 0 && direction.x === 0) {
-      direction = { x: -gridSize, y: 0 }; // Move LEFT
-    }
-  } else {
-    // Vertical movement
-    if (deltaY > 0 && direction.y === 0) {
-      direction = { x: 0, y: gridSize }; // Move DOWN
-    } else if (deltaY < 0 && direction.y === 0) {
-      direction = { x: 0, y: -gridSize }; // Move UP
-    }
-  }
-});
-
-
-function handleTouchSwipe() {
-  // Calculate swipe direction
-  const deltaX = touchEndX - touchStartX;
-  const deltaY = touchEndY - touchStartY;
-
-  // If swipe is mostly horizontal
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (deltaX > 0 && direction.x === 0) {  // Swipe right
-      direction = { x: gridSize, y: 0 };
-    } else if (deltaX < 0 && direction.x === 0) {  // Swipe left
-      direction = { x: -gridSize, y: 0 };
-    }
-  }
-  // If swipe is mostly vertical
-  else {
-    if (deltaY > 0 && direction.y === 0) {  // Swipe down
-      direction = { x: 0, y: gridSize };
-    } else if (deltaY < 0 && direction.y === 0) {  // Swipe up
-      direction = { x: 0, y: -gridSize };
     }
   }
 }
+
+// Touch events for mobile controls
+canvas.addEventListener("touchstart", (e) => {
+  touchX = e.touches[0].clientX;
+  touchY = e.touches[0].clientY;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  touchX = e.touches[0].clientX;
+  touchY = e.touches[0].clientY;
+});
 
 // Reset the game
 function resetGame() {
@@ -273,6 +187,7 @@ function resetGame() {
 let gameLoopID;
 function gameLoop() {
   if (!gameOver) {
+    updateSnakeDirection(); // Adjust direction based on touch
     moveSnake();
     draw();
     gameLoopID = setTimeout(gameLoop, gameSpeed); // Schedule next iteration
