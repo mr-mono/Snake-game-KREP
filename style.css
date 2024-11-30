@@ -118,11 +118,11 @@ body {
 
 /* Canvas styling */
 canvas {
-    width: 100%;  /* Canvas width takes up 100% of its container */
-    height: 100%; /* Canvas height takes up 100% of its container */
+    width: 520px; /* Match the width specified in the HTML */
+    height: 520px; /* Match the height specified in the HTML */
     border: 2px solid black;
     display: block;
-    background-color: white; /* Set the canvas background to white */
+    background-color: white;
 }
 
 
