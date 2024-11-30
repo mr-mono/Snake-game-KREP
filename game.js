@@ -163,18 +163,21 @@ canvas.addEventListener("touchmove", (e) => {
 
 // Handle keyboard input for snake direction
 document.addEventListener('keydown', (e) => {
-    console.log('Key pressed:', e.key);  // Debugging line
     switch (e.key) {
         case 'ArrowUp':
+            // Prevent reversing direction (can't go from down to up)
             if (direction.y === 0) direction = { x: 0, y: -gridSize };
             break;
         case 'ArrowDown':
+            // Prevent reversing direction (can't go from up to down)
             if (direction.y === 0) direction = { x: 0, y: gridSize };
             break;
         case 'ArrowLeft':
+            // Prevent reversing direction (can't go from right to left)
             if (direction.x === 0) direction = { x: -gridSize, y: 0 };
             break;
         case 'ArrowRight':
+            // Prevent reversing direction (can't go from left to right)
             if (direction.x === 0) direction = { x: gridSize, y: 0 };
             break;
     }
