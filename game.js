@@ -60,35 +60,33 @@ let touchY = 0;
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+  // Draw the snake (without resizing the image)
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize, gridSize);
   }
-  ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
-  document.getElementById("score").textContent = `solami ${score}`;
-}
 
+  // Draw the food (without resizing the image)
+  ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
+
+  // Update the score display
+  document.getElementById("score").textContent = `solami ${score}`;  // Display "solami" with the score
+}
 
 function moveSnake() {
   if (gameOver) return;  // If the game is over, don't move the snake
 
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-  function moveSnake() {
-  if (gameOver) return;  // If the game is over, don't move the snake
-
-  let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
-
   // Check for collision with walls
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-    endGame(); // End the game if the snake moves outside the canvas
-    return; // Stop further execution if the game is over
+    endGame(); // Game over if the snake hits the wall
   }
 
   // Check for collision with itself
   for (let i = 0; i < snake.length; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
-      endGame(); // End the game if the snake collides with itself
-      return; // Stop further execution if the game is over
+      endGame(); // Game over if the snake collides with itself
     }
   }
 
@@ -103,7 +101,6 @@ function moveSnake() {
     snake.pop();  // Remove the last segment if no food was eaten
   }
 }
-
 
 function generateFood() {
   // Ensure food is placed on the grid (multiples of gridSize)
