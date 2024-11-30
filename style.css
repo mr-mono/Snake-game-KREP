@@ -118,15 +118,11 @@ body {
 
 /* Canvas styling */
 canvas {
-    width: 90vw;  /* Adjust canvas width to 90% of the viewport width */
-    height: 90vw; /* Keep a square aspect ratio */
-    max-width: 100%; /* Ensure it doesn't overflow the container */
-    max-height: calc(100vh - 20px); /* Prevent overflow beyond viewport height */
+    width: 100%;  /* Canvas width takes up 100% of its container */
+    height: 100%; /* Canvas height takes up 100% of its container */
     border: 2px solid black;
     display: block;
     background-color: white; /* Set the canvas background to white */
-    margin: 0 auto; /* Center the canvas horizontally */
-    box-sizing: border-box; /* Ensure padding/borders don’t affect size */
 }
 
 
