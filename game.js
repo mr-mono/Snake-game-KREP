@@ -161,6 +161,24 @@ canvas.addEventListener("touchmove", (e) => {
   touchY = e.touches[0].clientY;
 });
 
+// Handle keyboard input for snake direction
+document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'ArrowUp':
+            if (direction.y === 0) direction = { x: 0, y: -gridSize };
+            break;
+        case 'ArrowDown':
+            if (direction.y === 0) direction = { x: 0, y: gridSize };
+            break;
+        case 'ArrowLeft':
+            if (direction.x === 0) direction = { x: -gridSize, y: 0 };
+            break;
+        case 'ArrowRight':
+            if (direction.x === 0) direction = { x: gridSize, y: 0 };
+            break;
+    }
+});
+
 // Reset the game
 function resetGame() {
   if (gameLoopID) {
