@@ -32,7 +32,6 @@ const calculateCanvasSize = () => {
   return Math.floor(canvasSize / 20); // Scale grid size to fit the screen
 };
 
-
 let gridSize = calculateCanvasSize();  // Initial grid size calculation based on screen
 
 let score = 1;
@@ -122,7 +121,7 @@ function endGame() {
   document.getElementById("game-over-container").style.display = "block"; // Show game over message and button
 }
 
-// Update direction based on touch position
+// Update direction based on touch position (only mobile touch events)
 function updateSnakeDirection() {
   const snakeHead = snake[0];
 
@@ -151,7 +150,7 @@ function updateSnakeDirection() {
   }
 }
 
-// Touch events for mobile controls
+// Touch events for mobile controls (only mobile touch, no mouse controls)
 canvas.addEventListener("touchstart", (e) => {
   touchX = e.touches[0].clientX;
   touchY = e.touches[0].clientY;
