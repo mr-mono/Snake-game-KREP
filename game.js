@@ -163,25 +163,35 @@ canvas.addEventListener("touchmove", (e) => {
 
 // Handle keyboard input for snake direction
 document.addEventListener('keydown', (e) => {
+    const newDirection = { x: direction.x, y: direction.y }; // Copy current direction
+
     switch (e.key) {
         case 'ArrowUp':
-            // Prevent reversing direction (can't go from down to up)
-            if (direction.y === 0) direction = { x: 0, y: -gridSize };
+            if (direction.y === 0) newDirection.x = 0, newDirection.y = -gridSize;
             break;
         case 'ArrowDown':
-            // Prevent reversing direction (can't go from up to down)
-            if (direction.y === 0) direction = { x: 0, y: gridSize };
+            if (direction.y === 0) newDirection.x = 0, newDirection.y = gridSize;
             break;
         case 'ArrowLeft':
-            // Prevent reversing direction (can't go from right to left)
-            if (direction.x === 0) direction = { x: -gridSize, y: 0 };
+            if (direction.x === 0) newDirection.x = -gridSize, newDirection.y = 0;
             break;
         case 'ArrowRight':
-            // Prevent reversing direction (can't go from left to right)
-            if (direction.x === 0) direction = { x: gridSize, y: 0 };
+            if (direction.x === 0) newDirection.x = gridSize, newDirection.y = 0;
             break;
     }
+
+    // Check if the new direction causes a self-collision
+    const newHead = {
+        x: snake[0].x + newDirection.x,
+        y: snake[0].y + newDirection.y
+    };
+
+    // Check if the new head position is not colliding with the body
+    if (!snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+        direction = newDirection; // Update direction if safe
+    }
 });
+
 
 
 // Reset the game
