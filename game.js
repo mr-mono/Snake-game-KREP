@@ -60,18 +60,13 @@ let touchY = 0;
 // Game functions
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-  // Draw the snake (without resizing the image)
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImage, snake[i].x, snake[i].y, gridSize, gridSize);
   }
-
-  // Draw the food (without resizing the image)
   ctx.drawImage(foodImage, food.x, food.y, gridSize, gridSize);
-
-  // Update the score display
-  document.getElementById("score").textContent = `solami ${score}`;  // Display "solami" with the score
+  document.getElementById("score").textContent = `solami ${score}`;
 }
+
 
 function moveSnake() {
   if (gameOver) return;  // If the game is over, don't move the snake
