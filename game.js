@@ -121,46 +121,48 @@ function endGame() {
   document.getElementById("game-over-container").style.display = "block"; // Show game over message and button
 }
 
-// Update direction based on touch position (only mobile touch events)
-function updateSnakeDirection() {
-  const snakeHead = snake[0];
+// Keyboard event listener
+window.addEventListener("keydown", (e) => {
+  if (gameOver) return; // Ignore input if the game is over
 
-  // Convert touch position to canvas coordinates
-  const canvasRect = canvas.getBoundingClientRect();
-  const touchCanvasX = touchX - canvasRect.left;
-  const touchCanvasY = touchY - canvasRect.top;
-
-  // Calculate the difference between touch and snake head
-  const deltaX = touchCanvasX - (snakeHead.x + gridSize / 2);
-  const deltaY = touchCanvasY - (snakeHead.y + gridSize / 2);
-
-  // Update direction based on the touch position
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (deltaX > 0 && direction.x === 0) {
-      direction = { x: gridSize, y: 0 }; // Move RIGHT
-    } else if (deltaX < 0 && direction.x === 0) {
-      direction = { x: -gridSize, y: 0 }; // Move LEFT
-    }
-  } else {
-    if (deltaY > 0 && direction.y === 0) {
-      direction = { x: 0, y: gridSize }; // Move DOWN
-    } else if (deltaY < 0 && direction.y === 0) {
-      direction = { x: 0, y: -gridSize }; // Move UP
-    }
+  // Prevent the snake from reversing direction
+  switch (e.key) {
+    case "ArrowUp":
+      if (direction.y === 0) newDirection = { x: 0, y: -gridSize }; // Move UP
+      break;
+    case "ArrowDown":
+      if (direction.y === 0) newDirection = { x: 0, y: gridSize }; // Move DOWN
+      break;
+    case "ArrowLeft":
+      if (direction.x === 0) newDirection = { x: -gridSize, y: 0 }; // Move LEFT
+      break;
+    case "ArrowRight":
+      if (direction.x === 0) newDirection = { x: gridSize, y: 0 }; // Move RIGHT
+      break;
   }
-}
+});
 
-// Touch events for mobile controls (only mobile touch, no mouse controls)
+// Touch events for mobile controls
 canvas.addEventListener("touchstart", (e) => {
-  touchX = e.touches[0].clientX;
-  touchY = e.touches[0].clientY;
-});
+  if (gameOver) return; // Ignore input if the game is over
+  const canvasRect = canvas.getBoundingClientRect();
+  const touchX = e.touches[0].clientX - canvasRect.left;
+  const touchY = e.touches[0].clientY - canvasRect.top;
 
-canvas.addEventListener("touchmove", (e) => {
-  touchX = e.touches[0].clientX;
-  touchY = e.touches[0].clientY;
-});
+  const snakeHead = snake[0];
+  const deltaX = touchX - (snakeHead.x + gridSize / 2);
+  const deltaY = touchY - (snakeHead.y + gridSize / 2);
 
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    // Horizontal movement
+    if (deltaX > 0 && direction.x === 0) newDirection = { x: gridSize, y: 0 }; // Move RIGHT
+    else if (deltaX < 0 && direction.x === 0) newDirection = { x: -gridSize, y: 0 }; // Move LEFT
+  } else {
+    // Vertical movement
+    if (deltaY > 0 && direction.y === 0) newDirection = { x: 0, y: gridSize }; // Move DOWN
+    else if (deltaY < 0 && direction.y === 0) newDirection = { x: 0, y: -gridSize }; // Move UP
+  }
+});
 // Reset the game
 function resetGame() {
   if (gameLoopID) {
