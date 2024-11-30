@@ -51,21 +51,26 @@
     <!-- Add JavaScript -->
     <script>
         // Handle the Start Game button
-        document.getElementById("start-game-button").addEventListener("click", function () {
-            const controlsMessage = document.getElementById("controls-message");
-            const gameContainer = document.getElementById("game-container");
-            const scoreContainer = document.getElementById("score-container");
+document.getElementById("start-game-button").addEventListener("click", function () {
+    const controlsMessage = document.getElementById("controls-message");
+    const gameContainer = document.getElementById("game-container");
+    const scoreContainer = document.getElementById("score-container");
+    const linksContainer = document.getElementById("links-container");
 
-            // Hide the controls message
-            controlsMessage.style.display = "none";
+    // Hide the controls message
+    controlsMessage.style.display = "none";
 
-            // Show the game area and score
-            gameContainer.style.display = "block";
-            scoreContainer.style.display = "block";
+    // Hide the links container
+    linksContainer.style.display = "none";
 
-            // Start the game
-            startGame();
-        });
+    // Show the game area and score
+    gameContainer.style.display = "block";
+    scoreContainer.style.display = "block";
+
+    // Start the game
+    startGame();
+});
+
 
         // Handle copying the contract address
         document.getElementById("contact-link").addEventListener("click", function (event) {
