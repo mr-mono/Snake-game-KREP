@@ -78,15 +78,22 @@ function moveSnake() {
 
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
+  function moveSnake() {
+  if (gameOver) return;  // If the game is over, don't move the snake
+
+  let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
   // Check for collision with walls
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-    endGame(); // Game over if the snake hits the wall
+    endGame(); // End the game if the snake moves outside the canvas
+    return; // Stop further execution if the game is over
   }
 
   // Check for collision with itself
   for (let i = 0; i < snake.length; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
-      endGame(); // Game over if the snake collides with itself
+      endGame(); // End the game if the snake collides with itself
+      return; // Stop further execution if the game is over
     }
   }
 
@@ -101,6 +108,7 @@ function moveSnake() {
     snake.pop();  // Remove the last segment if no food was eaten
   }
 }
+
 
 function generateFood() {
   // Ensure food is placed on the grid (multiples of gridSize)
