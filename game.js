@@ -19,9 +19,9 @@ let gameSpeed = initialGameSpeed; // Initial game speed
 // Calculate canvas size based on screen size
 const calculateCanvasSize = () => {
   const maxWidth = window.innerWidth * 0.9; // 90% of the screen width
-  const maxHeight = window.innerHeight * 0.7; // 70% of the screen height
+  const maxHeight = window.innerHeight * 0.8; // 80% of the screen height (leaves room for UI)
 
-  // Set canvas size with a maximum limit, maintaining the square aspect ratio
+  // Maintain square aspect ratio and ensure the canvas fits the screen
   const canvasSize = Math.min(maxWidth, maxHeight);
 
   // Set the canvas width and height
@@ -31,6 +31,7 @@ const calculateCanvasSize = () => {
   // Adjust grid size based on the canvas size
   return Math.floor(canvasSize / 20); // Scale grid size to fit the screen
 };
+
 
 let gridSize = calculateCanvasSize();  // Initial grid size calculation based on screen
 
