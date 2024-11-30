@@ -163,6 +163,7 @@ canvas.addEventListener("touchmove", (e) => {
 
 // Handle keyboard input for snake direction
 document.addEventListener('keydown', (e) => {
+    console.log('Key pressed:', e.key);  // Debugging line
     switch (e.key) {
         case 'ArrowUp':
             if (direction.y === 0) direction = { x: 0, y: -gridSize };
@@ -178,6 +179,7 @@ document.addEventListener('keydown', (e) => {
             break;
     }
 });
+
 
 // Reset the game
 function resetGame() {
@@ -205,7 +207,7 @@ function resetGame() {
 let gameLoopID;
 function gameLoop() {
   if (!gameOver) {
-    updateSnakeDirection(); // Adjust direction based on touch
+   // updateSnakeDirection(); // Adjust direction based on touch
     moveSnake();
     draw();
     gameLoopID = setTimeout(gameLoop, gameSpeed); // Schedule next iteration
