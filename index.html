@@ -20,7 +20,7 @@
             <li>hurrr, durrr</li>
             <li>Me smart, Me play game now?</li>
         </ul>
-        <button id="start-game-button" style="margin-top: 20px; padding: 10px 20px; font-size: 18px;">DONT Start</button>
+        <button id="start-game-button" style="margin-top: 20px; padding: 10px 20px; font-size: 18px;">Start Game</button>
     </div>
 
     <!-- Links Section below the game title -->
@@ -44,43 +44,38 @@
         <div id="game-over-container" style="display: none;">
             <p id="game-over-message">Game over</p>
             <p id="you-win-message">->Shitty player detected!<-</p>
-            <button id="reset-button" onclick="resetGame()">PLEASE don't play again!</button>
+            <button id="reset-button">PLEASE don't play again!</button>
         </div>
     </div>
 
     <!-- Add JavaScript -->
     <script>
-// Handle the Start Game button
-document.getElementById("start-game-button").addEventListener("click", function () {
-    const controlsMessage = document.getElementById("controls-message");
-    const gameContainer = document.getElementById("game-container");
-    const scoreContainer = document.getElementById("score-container");
-    const linksContainer = document.getElementById("links-container");
+    // Wait for DOM content to load before adding event listeners
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle the Start Game button
+        document.getElementById("start-game-button").addEventListener("click", function () {
+            const controlsMessage = document.getElementById("controls-message");
+            const gameContainer = document.getElementById("game-container");
+            const scoreContainer = document.getElementById("score-container");
+            const linksContainer = document.getElementById("links-container");
 
-    // Hide the controls message
-    controlsMessage.style.display = "none";
+            // Hide the controls message
+            controlsMessage.style.display = "none";
 
-    // Hide the links container when the game starts
-    linksContainer.style.display = "none";
+            // Hide the links container when the game starts
+            linksContainer.style.display = "none";
 
-    // Show the game area and score
-    gameContainer.style.display = "block";
-    scoreContainer.style.display = "block";
+            // Show the game area and score
+            gameContainer.style.display = "block";
+            scoreContainer.style.display = "block";
 
-// Show the links container after the game starts
-    linksContainer.style.display = "block";
+            // Start the game
+            startGame();
+        });
 
-    // Start the game
-    startGame();
-});
-
-// Hide the links container on page load
-window.onload = function() {
-    const linksContainer = document.getElementById("links-container");
-    linksContainer.style.display = "none";
-};
-
-
+        // Hide the links container on page load
+        const linksContainer = document.getElementById("links-container");
+        linksContainer.style.display = "none";
 
         // Handle copying the contract address
         document.getElementById("contact-link").addEventListener("click", function (event) {
@@ -97,6 +92,7 @@ window.onload = function() {
 
         // Reset game logic
         document.getElementById("reset-button").addEventListener("click", resetGame);
+    });
     </script>
 
     <script src="game.js"></script>
