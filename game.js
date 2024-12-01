@@ -79,7 +79,12 @@ function moveSnake() {
   let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
   // Check for collision with walls
-  if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+  if (
+    head.x < 0 || 
+    head.x + gridSize > canvas.width || // Collision with the right wall
+    head.y < 0 || 
+    head.y + gridSize > canvas.height // Collision with the bottom wall
+  ) {
     endGame(); // Game over if the snake hits the wall
   }
 
@@ -121,106 +126,45 @@ function endGame() {
   document.getElementById("game-over-container").style.display = "block"; // Show game over message and button
 }
 
-// Update direction based on touch position
-function updateSnakeDirection() {
-  const snakeHead = snake[0];
-
-  // Convert touch position to canvas coordinates
-  const canvasRect = canvas.getBoundingClientRect();
-  const touchCanvasX = touchX - canvasRect.left;
-  const touchCanvasY = touchY - canvasRect.top;
-
-  // Calculate the difference between touch and snake head
-  const deltaX = touchCanvasX - (snakeHead.x + gridSize / 2);
-  const deltaY = touchCanvasY - (snakeHead.y + gridSize / 2);
-
-  // Update direction based on the touch position
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (deltaX > 0 && direction.x === 0) {
-      direction = { x: gridSize, y: 0 }; // Move RIGHT
-    } else if (deltaX < 0 && direction.x === 0) {
-      direction = { x: -gridSize, y: 0 }; // Move LEFT
-    }
-  } else {
-    if (deltaY > 0 && direction.y === 0) {
-      direction = { x: 0, y: gridSize }; // Move DOWN
-    } else if (deltaY < 0 && direction.y === 0) {
-      direction = { x: 0, y: -gridSize }; // Move UP
-    }
-  }
-}
-
 // Touch events for mobile controls
 canvas.addEventListener("touchstart", (e) => {
   touchX = e.touches[0].clientX;
   touchY = e.touches[0].clientY;
 });
 
-canvas.addEventListener("touchmove", (e) => {
-  touchX = e.touches[0].clientX;
-  touchY = e.touches[0].clientY;
-});
-
 // Handle keyboard input for snake direction
 document.addEventListener('keydown', (e) => {
-    const newDirection = { x: direction.x, y: direction.y }; // Copy current direction
-
-    switch (e.key) {
-        case 'ArrowUp':
-            if (direction.y === 0) newDirection.x = 0, newDirection.y = -gridSize;
-            break;
-        case 'ArrowDown':
-            if (direction.y === 0) newDirection.x = 0, newDirection.y = gridSize;
-            break;
-        case 'ArrowLeft':
-            if (direction.x === 0) newDirection.x = -gridSize, newDirection.y = 0;
-            break;
-        case 'ArrowRight':
-            if (direction.x === 0) newDirection.x = gridSize, newDirection.y = 0;
-            break;
-    }
-
-    // Check if the new direction causes a self-collision
-    const newHead = {
-        x: snake[0].x + newDirection.x,
-        y: snake[0].y + newDirection.y
-    };
-
-    // Check if the new head position is not colliding with the body
-    if (!snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
-        direction = newDirection; // Update direction if safe
-    }
+  switch (e.key) {
+    case 'ArrowUp': if (direction.y === 0) direction = { x: 0, y: -gridSize }; break;
+    case 'ArrowDown': if (direction.y === 0) direction = { x: 0, y: gridSize }; break;
+    case 'ArrowLeft': if (direction.x === 0) direction = { x: -gridSize, y: 0 }; break;
+    case 'ArrowRight': if (direction.x === 0) direction = { x: gridSize, y: 0 }; break;
+  }
 });
-
-
 
 // Reset the game
 function resetGame() {
-  if (gameLoopID) {
-    clearTimeout(gameLoopID); // Stop any existing game loop
-  }
-
+  clearTimeout(gameLoopID); // Stop any existing game loop
   gameOver = false;
   gameSpeed = initialGameSpeed; // Reset the game speed
   document.getElementById("game-over-container").style.display = "none"; // Hide the game over message
   
-  // Reset snake position and direction to start further down and move up
+  // Reset snake position and direction
   snake = [{ 
     x: Math.floor(canvas.width / 2 / gridSize) * gridSize, 
-    y: Math.floor(canvas.height * 0.7 / gridSize) * gridSize // Start 70% down the canvas
+    y: Math.floor(canvas.height * 0.7 / gridSize) * gridSize 
   }];
   direction = { x: 0, y: -gridSize }; // Initial direction is UP
-  score = 1; // Reset score to 1
+  score = 1; // Reset score
   
   generateFood(); // Generate new food
-  gameLoop(); // Restart the game loop with the initial game speed
+  gameLoop(); // Restart the game loop
 }
 
 // Game loop function
 let gameLoopID;
 function gameLoop() {
   if (!gameOver) {
-   // updateSnakeDirection(); // Adjust direction based on touch
     moveSnake();
     draw();
     gameLoopID = setTimeout(gameLoop, gameSpeed); // Schedule next iteration
@@ -232,9 +176,9 @@ window.addEventListener('resize', () => {
   gridSize = calculateCanvasSize(); // Recalculate grid size on resize
 });
 
-// Call this to generate the initial food and start the loop
+// Start the game
 generateFood();
 gameLoop();
 
 // Ensure the "Play Again" button calls the resetGame function
-document.getElementById("reset-button").onclick = resetGame; // Add an event listener to the button
+document.getElementById("reset-button").onclick = resetGame;
